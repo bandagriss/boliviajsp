@@ -58,7 +58,7 @@
                     <!--Links-->
                     <ul class="nav navbar-nav">
                         <li class="nav-item active">
-                            <a class="nav-link waves-effect waves-light" href="#">Inicio <span class="sr-only">(current)</span></a>
+                            <a class="nav-link waves-effect waves-light" href="Inicio?action=inicio">Inicio <span class="sr-only">(current)</span></a>
                         </li>
                         <li class="nav-item">
                             <a class="nav-link waves-effect waves-light" href="DepartmentController?action=listDepartment">Departamentos</a>
@@ -103,12 +103,23 @@
             <% String action = request.getParameter("action");
                 System.out.println(action);
             %>
-             <input type="text" name="id" value="<c:out value="${province.id}"/>"  style="visibility:hidden"/><br>
-             <div class="md-form">
-                <i class="fa fa-map-o prefix"></i>
-                <input type="text" id="form2" class="form-control" name="department_id" value="<c:out value="${province.department_id}"/>" />  
-                <label for="form2">Departamento</label>
-            </div>
+            <input type="text" name="id" value="<c:out value="${province.id}"/>"  style="visibility:hidden"/><br>
+            <!-- Large button group -->                                
+            <label>Departamento</label>
+            <select class="browser-default" name="department_id">
+                <c:forEach items="${departments}" var="department">
+                    <option value="<c:out value="${department.id}"/>">
+                        <c:out value="${department.name}"/>
+                    </option>
+                </c:forEach>
+            </select>        
+            
+            
+                    
+                   <br><br>
+                <!-- fin button -->
+            
+             
             <div class="md-form">
                 <i class="fa fa-terminal prefix"></i>
                 <input type="text" id="form2" class="form-control" name="name" value="<c:out value="${province.name}"/>" />  

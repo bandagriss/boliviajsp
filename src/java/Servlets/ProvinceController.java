@@ -5,6 +5,7 @@
  */
 package Servlets;
 
+import Crud.DepartmentCrud;
 import Crud.ProviceCrud;
 import Model.Province;
 import java.io.IOException;
@@ -25,10 +26,12 @@ public class ProvinceController extends HttpServlet {
     private static String INSERT_OR_EDIT = "/CEprovince.jsp";
     private static String LIST_PROVINCE = "/provinces.jsp";
     private ProviceCrud pro;
+    private DepartmentCrud dep;
     
     public ProvinceController(){
         super();
         pro = new ProviceCrud();
+        dep = new DepartmentCrud();
     }
 
     /**
@@ -66,11 +69,13 @@ public class ProvinceController extends HttpServlet {
             Province province = pro.getProvinceById(id);
             System.out.println(province.getDepartment_id());
             request.setAttribute("province", province);
+            request.setAttribute("departments", dep.getAllDepartments());
         }else if(action.equalsIgnoreCase("listProvince")){
             forward = LIST_PROVINCE;
             request.setAttribute("provinces", pro.getAllProvinces());
         }else{
             forward = INSERT_OR_EDIT;
+            request.setAttribute("departments", dep.getAllDepartments());
         }
         RequestDispatcher view = request.getRequestDispatcher(forward);
         view.forward(request, response);
@@ -88,7 +93,6 @@ public class ProvinceController extends HttpServlet {
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         
-        System.out.println("llega antes o depues");
         Province province = new Province();
         if(request.getParameter("id")!= ""){
             province.setId(Integer.parseInt(request.getParameter("id")));
